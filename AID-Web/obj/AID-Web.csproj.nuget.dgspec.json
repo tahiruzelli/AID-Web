@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Tahir Uzelli\\Documents\\GitHub\\AID-Web\\AID\\AID.csproj": {}
+    "C:\\Users\\Tahir Uzelli\\source\\repos\\AID-Web\\AID-Web\\AID-Web.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Tahir Uzelli\\Documents\\GitHub\\AID-Web\\AID\\AID.csproj": {
+    "C:\\Users\\Tahir Uzelli\\source\\repos\\AID-Web\\AID-Web\\AID-Web.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Tahir Uzelli\\Documents\\GitHub\\AID-Web\\AID\\AID.csproj",
-        "projectName": "AID",
-        "projectPath": "C:\\Users\\Tahir Uzelli\\Documents\\GitHub\\AID-Web\\AID\\AID.csproj",
+        "projectUniqueName": "C:\\Users\\Tahir Uzelli\\source\\repos\\AID-Web\\AID-Web\\AID-Web.csproj",
+        "projectName": "AID-Web",
+        "projectPath": "C:\\Users\\Tahir Uzelli\\source\\repos\\AID-Web\\AID-Web\\AID-Web.csproj",
         "packagesPath": "C:\\Users\\Tahir Uzelli\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Tahir Uzelli\\Documents\\GitHub\\AID-Web\\AID\\obj\\",
+        "outputPath": "C:\\Users\\Tahir Uzelli\\source\\repos\\AID-Web\\AID-Web\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -22,15 +22,15 @@
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net5.0"
+          "net6.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net5.0": {
-            "targetAlias": "net5.0",
+          "net6.0": {
+            "targetAlias": "net6.0",
             "projectReferences": {}
           }
         },
@@ -41,8 +41,8 @@
         }
       },
       "frameworks": {
-        "net5.0": {
-          "targetAlias": "net5.0",
+        "net6.0": {
+          "targetAlias": "net6.0",
           "dependencies": {
             "Bogus": {
               "target": "Package",
@@ -67,6 +67,10 @@
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
               "version": "[5.0.7, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.2.3, )"
             }
           },
           "imports": [
@@ -79,12 +83,6 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.NETCore.App.Host.win-x64",
-              "version": "[5.0.15, 5.0.15]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
