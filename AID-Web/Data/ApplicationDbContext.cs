@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace AKAN.Data
+namespace AID.Data
 {
     public class ApplicationDbContext : DbContext
     {
