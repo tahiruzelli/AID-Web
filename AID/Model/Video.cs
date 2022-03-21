@@ -12,6 +12,7 @@ namespace AID.Model
         public double videoLength { get; set; }
         public double totalGain { get; set; }
         public string coverImageUrl { get; set; }
+        public DateTime createTime { get; set; }
 
     }
 }

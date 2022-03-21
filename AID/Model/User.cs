@@ -11,11 +11,11 @@ namespace AID.Model
         public string name { get; set; }
         public string email { get; set; }
         public string password { get; set; }
-        public string avatarUrl { get; set; }
+        public int avatarId { get; set; }
         public double balance { get; set; }
         public double totalGain { get; set; }
         public double totalVideoEditetTime { get; set; }
-        public string createDate { get; set; }
+        public DateTime createDate { get; set; }
         
 
 

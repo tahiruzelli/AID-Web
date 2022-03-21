@@ -15,6 +15,6 @@ namespace AID.Model
         public string cardHolder { get; set; }
         public int userId { get; set; }
         public DateTime createTime { get; set; }
-        public bool isApprover { get; set; }
+        public bool isApproved { get; set; }
     }
 }
