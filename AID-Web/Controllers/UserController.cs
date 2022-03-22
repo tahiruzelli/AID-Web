@@ -60,6 +60,24 @@ namespace AID.Controller
             }
 
         }
-
+        [HttpPost("Register")]
+        public ResponseModel register([FromBody] string email, [FromBody] string password, [FromBody] string name, [FromBody] int avatarId)
+        {
+            User user = new User();
+            user.id = 0;
+            user.name = name;
+            user.email = email;
+            user.avatarId = avatarId;
+            user.password = password;
+            user.totalGain = 0;
+            user.balance = 0;
+            user.totalVideoEditetTime = 0;
+            user.createDate = DateTime.Now;
+            _user.Add(user);
+            Dictionary<string, object> newUser = new Dictionary<string, object>();
+            newUser["users"] = user;
+            ResponseModel response = new ResponseModel(true,newUser,"");
+            return response;
+        }
     }
 }
