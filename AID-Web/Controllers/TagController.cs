@@ -8,11 +8,11 @@ namespace AID_Web.Controllers
     public class TagController : ControllerBase
     {
         private List<Tag> _tags = FakeData.getTags(10);
-        //[HttpGet("GetAllTags")]
-        //public ResponseModel getAllTags()
-        //{
-
-        //}
+        [HttpGet("GetAllTags")]
+        public ResponseModel<List<Tag>> getAllTags()
+        {
+            return new ResponseModel<List<Tag>>(true, _tags, "");
+        }
 
     }
 }

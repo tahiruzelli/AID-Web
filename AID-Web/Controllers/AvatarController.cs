@@ -9,12 +9,10 @@ namespace AID_Web.Controllers
     {
         private List<Avatar> _avatars = FakeData.getAvatars(10);
         [HttpGet("GelAllAvatars")]
-        public ResponseModel getAllAvatars()
+        public ResponseModel<List<Avatar>> getAllAvatars()
         {
-            Dictionary<string, object> avatars = new Dictionary<string, object>();
-            avatars["avatars"] = _avatars;
-            ResponseModel response = new ResponseModel(true, avatars, "");
-            return response;
+            
+            return new ResponseModel<List<Avatar> >(true, _avatars, "");
         }
     }
 }

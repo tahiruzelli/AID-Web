@@ -12,56 +12,41 @@ namespace AID.Controller
     {
         private List<User> _user = FakeData.getUsers(200);
         [HttpGet("GetUser/{id}")]
-        public ResponseModel getUser(int id) {
+        public ResponseModel<User> getUser(int id) {
             User user = _user.FirstOrDefault(x => x.id == id);
             if (user == null) {
-                ResponseModel response = new ResponseModel(false, null, "Böyle bir user yok");
-                return response;
+                return new ResponseModel<User>(false, null, "Böyle bir user yok");
             }
             else
             {
-                Dictionary<string, object> selectedUser = new Dictionary<string, object>();
-                selectedUser["user"] = user;
-                ResponseModel response = new ResponseModel(true, selectedUser, "");
-                return response;
+                return new ResponseModel<User>(true, user, "");
             }
             
         }
         [HttpGet("GetAllUsers")]
-        public ResponseModel getAllUsers()
+        public ResponseModel<List<User>> getAllUsers()
         {
-            Dictionary<string, object> allUsers = new Dictionary<string, object>();
-            allUsers["users"] = _user;
-            ResponseModel response = new ResponseModel(true, allUsers, "");
-            return response;
+            return new ResponseModel<List<User>>(true, _user, "");
         }
         [HttpPost("Login")]
-        public ResponseModel login([FromBody]string email, [FromBody]string password)
+        public ResponseModel<User> login([FromBody]string email, [FromBody]string password)
         {
             User user = _user.FirstOrDefault(x => x.email == email);
-            ResponseModel response;
-
-
             if (user == null) {
-                response = new ResponseModel(false, null, "Bu emaile ait bir user yok!");
-                return response;
+                return new ResponseModel<User>(false, null, "Bu emaile ait bir user yok!");
             }
             else if (user.password == password)
             {
-                Dictionary<string, object> selectedUser = new Dictionary<string, object>();
-                selectedUser["user"] = user;
-                response = new ResponseModel(true, selectedUser, "");
-                return response;
+                return new ResponseModel<User>(true, user, "");
             }
             else
             {
-                response = new ResponseModel(false, null, "Parola eşleşmiyor");
-                return response;
+                return new ResponseModel<User>(false, null, "Parola eşleşmiyor");
             }
 
         }
         [HttpPost("Register")]
-        public ResponseModel register([FromBody] string email, [FromBody] string password, [FromBody] string name, [FromBody] int avatarId)
+        public ResponseModel<User> register([FromBody] string email, [FromBody] string password, [FromBody] string name, [FromBody] int avatarId)
         {
             User user = new User();
             user.id = 0;
@@ -74,10 +59,7 @@ namespace AID.Controller
             user.totalVideoEditetTime = 0;
             user.createDate = DateTime.Now;
             _user.Add(user);
-            Dictionary<string, object> newUser = new Dictionary<string, object>();
-            newUser["users"] = user;
-            ResponseModel response = new ResponseModel(true,newUser,"");
-            return response;
+             return new ResponseModel<User>(true,user,"");
         }
     }
 }

@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 
 namespace AID.Model
 {
-    public class ResponseModel
+    public class ResponseModel<T>
     {
         public bool success { get; set; }
-        public Dictionary<string,object> data { get; set;}
+        public T data { get; set;}
         public string error { get; set;}
 
-        public ResponseModel(bool success, Dictionary<string,object> data, string error) { 
+        public ResponseModel(bool success, T data , string error) { 
             this.success = success;
             this.data = data;
             this.error = error;
