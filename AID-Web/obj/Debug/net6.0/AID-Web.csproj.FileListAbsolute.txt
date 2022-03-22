@@ -68,3 +68,4 @@ C:\Users\Tahir Uzelli\Documents\GitHub\AID-Web\AID-Web\obj\Debug\net6.0\scopedcs
 C:\Users\Tahir Uzelli\Documents\GitHub\AID-Web\AID-Web\obj\Debug\net6.0\AID-Web.csproj.CopyComplete
 C:\Users\Tahir Uzelli\Documents\GitHub\AID-Web\AID-Web\obj\Debug\net6.0\AID-Web.genruntimeconfig.cache
 C:\Users\Tahir Uzelli\Documents\GitHub\AID-Web\AID-Web\obj\Debug\net6.0\ref\AID-Web.dll
+C:\Users\Tahir Uzelli\Documents\GitHub\AID-Web\AID-Web\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
