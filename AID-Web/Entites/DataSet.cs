@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AID.Model
+namespace AID.Entites
 {
     public class DataSet
     {
@@ -11,6 +11,6 @@ namespace AID.Model
         public string photoUrl { get; set; }
         public int tagId { get; set; }
         public int userId { get; set; }
-        public DateTime createTime { get; set; }
+        public DateTime createTime { get; set; } = DateTime.UtcNow;
     }
 }

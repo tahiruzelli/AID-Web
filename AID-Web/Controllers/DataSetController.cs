@@ -1,26 +1,26 @@
-﻿using AID.Model;
+﻿using AID.Entites;
 using Microsoft.AspNetCore.Mvc;
 using AID;
+using AID.Data;
 
 namespace AID_Web.Controllers
 {
     [Route("api/v1/[controller]")]
     public class DataSetController
     {
-        private List<DataSet> _dataSets = FakeData.getDataSets(10);
+        private readonly ApplicationDbContext _context;
+
+        public DataSetController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
         [HttpPost]
-        public ResponseModel<DataSet> createData([FromBody]DataSet dataSet)
+        public async Task<ResponseModel<DataSet>> CreateData([FromBody]DataSet newDataSet)
         {
 
-            DataSet newDataSet = new DataSet();
-            newDataSet.id = 0;
-            newDataSet.createTime = DateTime.Now;
-            newDataSet.photoUrl = dataSet.photoUrl;
-            newDataSet.userId = dataSet.userId;
-            newDataSet.tagId = dataSet.tagId;
-
-            _dataSets.Add(newDataSet);
-
+            DataSet dataSet = newDataSet;
+            _context.Add(dataSet);
+            _context.SaveChanges();
             return new ResponseModel<DataSet>(true, newDataSet, "");
         }
     }

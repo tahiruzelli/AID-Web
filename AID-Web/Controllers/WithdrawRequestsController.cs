@@ -1,44 +1,60 @@
 ﻿using AID;
-using AID.Model;
+using AID.Data;
+using AID.Entites;
+using AID_Web.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace AID_Web.Controllers
 {
     [Route("api/v1/[controller]")]
     public class WithdrawRequestsController : ControllerBase
     {
-        private List<WithdrawRequest> _withdrawRequests = FakeData.getWithdrawRequests(10);
-        [HttpGet("GetMyRequests/{id}")]
-        public ResponseModel<List<WithdrawRequest>> getMyRequests(int id)
+        private readonly ApplicationDbContext _context;
+
+        public WithdrawRequestsController(ApplicationDbContext context)
         {
-            return new ResponseModel<List<WithdrawRequest>>(true, _withdrawRequests, "");
+            _context = context;
+        }
+        [HttpGet("GetMyRequests/{id}")]
+        public async Task<ResponseModel<List<WithdrawRequest>>> GetMyRequests(int id)
+        {
+            List<WithdrawRequest> withdrawRequest = await _context.WithdrawRequests.Where(x => x.userId == id).ToListAsync();
+            if (withdrawRequest is null)
+                return new ResponseModel<List<WithdrawRequest>>(false, null, "Çekim isteği bulunmamaktadır.");
+            return new ResponseModel<List<WithdrawRequest>>(true, withdrawRequest, "");
         }
 
         [HttpPost("CreateRequest")]
-        public ResponseModel<WithdrawRequest> createRequest([FromBody]WithdrawRequest withdrawRequest)
+        public ResponseModel<WithdrawRequest> CreateRequest([FromBody]CreateWithdrawRequestModel withdrawRequest)
         {
             WithdrawRequest newWithdrawRequest = new WithdrawRequest();
-            newWithdrawRequest.userId = withdrawRequest.userId;
-            newWithdrawRequest.cvv = withdrawRequest.cvv;
-            newWithdrawRequest.cardHolder = withdrawRequest.cardHolder;
             newWithdrawRequest.expDate = withdrawRequest.expDate;
+            newWithdrawRequest.userId = withdrawRequest.userId;
             newWithdrawRequest.balance = withdrawRequest.balance;
             newWithdrawRequest.cardNo = withdrawRequest.cardNo;
+            newWithdrawRequest.cardHolder = withdrawRequest.cardHolder;
+            newWithdrawRequest.cvv = withdrawRequest.cvv;
+            newWithdrawRequest.createTime = DateTime.UtcNow;
             newWithdrawRequest.isApproved = false;
-            withdrawRequest.createTime = DateTime.Now;
 
-            _withdrawRequests.Add(newWithdrawRequest);
+            _context.Add(newWithdrawRequest);
+            _context.SaveChanges();
             
             return new ResponseModel<WithdrawRequest>(true, newWithdrawRequest, "");
         }
 
-        private bool approveWithDrawRequest(int id)
+        private async Task<bool> ApproveWithDrawRequest(int id)
         {
-            
-            WithdrawRequest withdrawRequest = _withdrawRequests.FirstOrDefault(x => x.id == id);
-            if (depositMoney(withdrawRequest.userId,withdrawRequest.balance) == true) {
+            WithdrawRequest withdrawRequest = await _context.WithdrawRequests.FirstOrDefaultAsync(x => x.id == id);
+            if(withdrawRequest is null)
+            {
+                return false;
+            }
+            else if (await depositMoney(withdrawRequest.userId,withdrawRequest.balance) == true) {
 
                 withdrawRequest.isApproved = true;
+                _context.SaveChanges();
                 return true;
             }
             else
@@ -48,10 +64,9 @@ namespace AID_Web.Controllers
             
         }
 
-        private bool depositMoney(int userId, double balance)
+        private async Task<bool> depositMoney(int userId, double balance)
         {
-            List<User> _user = FakeData.getUsers(200);
-            User user = _user.FirstOrDefault(x => x.id == userId);
+            User user = await _context.Users.FirstOrDefaultAsync(x => x.id == userId);
             if(user == null)
             {
                 return false;
@@ -62,8 +77,8 @@ namespace AID_Web.Controllers
             }
             else
             {
-                return true;
                 user.balance -= balance;
+                return true;
             }
             
           

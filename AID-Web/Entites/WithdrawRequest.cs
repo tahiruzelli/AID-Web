@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AID.Model
+namespace AID.Entites
 {
     public class WithdrawRequest
     {
@@ -14,7 +14,7 @@ namespace AID.Model
         public string expDate { get; set; }
         public string cardHolder { get; set; }
         public int userId { get; set; }
-        public DateTime createTime { get; set; }
+        public DateTime createTime { get; set; } = DateTime.UtcNow;
         public bool isApproved { get; set; }
     }
 }

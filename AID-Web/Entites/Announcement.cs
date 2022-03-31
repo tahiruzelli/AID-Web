@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AID.Model
+namespace AID.Entites
 {
     public class Announcement
     {
@@ -11,7 +11,7 @@ namespace AID.Model
         public string photoUrl { get; set; }
         public string title { get; set; }
         public string description { get; set; }
-        public DateTime createTime { get; set; }
+        public DateTime createTime { get; set; } = DateTime.UtcNow;
 
     }
 }

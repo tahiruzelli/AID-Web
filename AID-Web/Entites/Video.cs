@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AID.Model
+namespace AID.Entites
 {
     public class Video
     {
@@ -12,7 +12,7 @@ namespace AID.Model
         public double videoLength { get; set; }
         public double totalGain { get; set; }
         public string coverImageUrl { get; set; }
-        public DateTime createTime { get; set; }
+        public DateTime createTime { get; set; } = DateTime.UtcNow;
         public bool isActive { get; set; }
 
     }

@@ -1,5 +1,8 @@
-﻿using AID.Model;
+﻿using AID.Data;
+using AID.Entites;
+using AID_Web.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,34 +13,43 @@ namespace AID.Controller
     [Route("api/v1/[controller]")]
     public class UserController : ControllerBase
     {
-        private List<User> _user = FakeData.getUsers(200);
+        private readonly ApplicationDbContext _context;
+
+        public UserController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+        
         [HttpGet("GetUser/{id}")]
-        public ResponseModel<User> getUser(int id) {
-            User user = _user.FirstOrDefault(x => x.id == id);
-            if (user == null) {
+        public async Task<ResponseModel<User>> GetUser(int id) {
+            User user = await _context.Users.FirstOrDefaultAsync(x => x.id == id);
+            if (user is null)
                 return new ResponseModel<User>(false, null, "Böyle bir user yok");
-            }
-            else
-            {
-                return new ResponseModel<User>(true, user, "");
-            }
-            
+
+            return new ResponseModel<User>(true, user, "");
+
         }
         [HttpGet("GetAllUsers")]
-        public ResponseModel<List<User>> getAllUsers()
+        public async Task<ResponseModel<List<User>>> getAllUsers()
         {
-            return new ResponseModel<List<User>>(true, _user, "");
+            List<User> users = await _context.Users.ToListAsync();
+            return new ResponseModel<List<User>>(true, users, "");
         }
         [HttpPost("Login")]
-        public ResponseModel<User> login([FromBody]string email, [FromBody]string password)
+        public async Task<ResponseModel<User>> Login([FromBody]LoginModel loginUser)
         {
-            User user = _user.FirstOrDefault(x => x.email == email);
-            if (user == null) {
+
+            List<User> user = await _context.Users.Where(x => x.email == loginUser.email).ToListAsync();
+            if (!user.Any())
+            {
                 return new ResponseModel<User>(false, null, "Bu emaile ait bir user yok!");
             }
-            else if (user.password == password)
+            else if (user.Count > 1) {
+                return new ResponseModel<User>(false, null, "Bu emaile kayıtlı birden fazla kullanıcı var!");
+            }
+            else if (user[0].password == loginUser.password)
             {
-                return new ResponseModel<User>(true, user, "");
+                return new ResponseModel<User>(true, user[0], "");
             }
             else
             {
@@ -46,20 +58,24 @@ namespace AID.Controller
 
         }
         [HttpPost("Register")]
-        public ResponseModel<User> register([FromBody] string email, [FromBody] string password, [FromBody] string name, [FromBody] int avatarId)
+        public async Task<ResponseModel<User>> Register([FromBody]RegisterModel newUser)
         {
+            var user2 = await _context.Users.Where(x => x.email == newUser.email).ToListAsync();
+            if (user2.Any())
+            {
+                return new ResponseModel<User>(false, null, "Email zaten kayıtlı!");
+            }
             User user = new User();
-            user.id = 0;
-            user.name = name;
-            user.email = email;
-            user.avatarId = avatarId;
-            user.password = password;
+            user.email = newUser.email;
+            user.password = newUser.password;
+            user.avatarId = newUser.avatarId;
+            user.name = newUser.name;
             user.totalGain = 0;
             user.balance = 0;
             user.totalVideoEditetTime = 0;
-            user.createDate = DateTime.Now;
-            _user.Add(user);
-             return new ResponseModel<User>(true,user,"");
+            _context.Add(user);
+            _context.SaveChanges();
+            return new ResponseModel<User>(true,user,"");
         }
     }
 }
