@@ -51,7 +51,7 @@ namespace AID_Web.Controllers
             {
                 return false;
             }
-            else if (await depositMoney(withdrawRequest.userId,withdrawRequest.balance) == true) {
+            else if (await DepositMoney(withdrawRequest.userId,withdrawRequest.balance) == true) {
 
                 withdrawRequest.isApproved = true;
                 _context.SaveChanges();
