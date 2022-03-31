@@ -30,7 +30,7 @@ namespace AID.Controller
 
         }
         [HttpGet("GetAllUsers")]
-        public async Task<ResponseModel<List<User>>> getAllUsers()
+        public async Task<ResponseModel<List<User>>> GetAllUsers()
         {
             List<User> users = await _context.Users.ToListAsync();
             return new ResponseModel<List<User>>(true, users, "");

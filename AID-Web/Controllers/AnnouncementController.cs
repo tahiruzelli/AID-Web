@@ -18,7 +18,7 @@ namespace AID_Web.Controllers
         }
 
         [HttpGet("/GetAllAnnouncemets")]
-        public async Task<ResponseModel<List<Announcement>>> getAllAnnouncements()
+        public async Task<ResponseModel<List<Announcement>>> GetAllAnnouncements()
         {
             List<Announcement> announcement = await _context.Announcements.ToListAsync();
             ResponseModel<List<Announcement>> response = new ResponseModel<List<Announcement>>(true, announcement, "");

@@ -18,7 +18,7 @@ namespace AID_Web.Controllers
         }
 
         [HttpGet("GetAllVideos")]
-        public async  Task<ResponseModel<List<Video>>> gelAllVideos()
+        public async  Task<ResponseModel<List<Video>>> GetAllVideos()
         {
             List<Video> _avatars = await _context.Videos.ToListAsync();
             return new ResponseModel<List<Video>>(true, _avatars, "");

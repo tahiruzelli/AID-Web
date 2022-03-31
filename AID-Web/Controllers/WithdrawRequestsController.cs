@@ -64,7 +64,7 @@ namespace AID_Web.Controllers
             
         }
 
-        private async Task<bool> depositMoney(int userId, double balance)
+        private async Task<bool> DepositMoney(int userId, double balance)
         {
             User user = await _context.Users.FirstOrDefaultAsync(x => x.id == userId);
             if(user == null)

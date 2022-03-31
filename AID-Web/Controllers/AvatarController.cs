@@ -17,7 +17,7 @@ namespace AID_Web.Controllers
             _context = context;
         }
         [HttpGet("GelAllAvatars")]
-        public async Task<ResponseModel<List<Avatar>>> getAllAvatars()
+        public async Task<ResponseModel<List<Avatar>>> GetAllAvatars()
         {
             List<Avatar> avatars = await _context.Avatars.ToListAsync();
             Console.WriteLine(avatars);

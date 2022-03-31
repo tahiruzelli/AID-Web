@@ -16,7 +16,7 @@ namespace AID_Web.Controllers
             _context = context;
         }
         [HttpGet("GetAllTags")]
-        public async Task<ResponseModel<List<Tag>>> getAllTags()
+        public async Task<ResponseModel<List<Tag>>> GetAllTags()
         {
             List<Tag> _tags = await _context.Tags.ToListAsync();
             return new ResponseModel<List<Tag>>(true, _tags, "");
