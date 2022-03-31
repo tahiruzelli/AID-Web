@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AID_Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220329202132_firstMigration")]
-    partial class firstMigration
+    [Migration("20220331202535_001_change_data_time")]
+    partial class _001_change_data_time
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,7 +24,7 @@ namespace AID_Web.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("AID.Model.Announcement", b =>
+            modelBuilder.Entity("AID.Entites.Announcement", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
@@ -49,7 +49,7 @@ namespace AID_Web.Migrations
                     b.ToTable("Announcements");
                 });
 
-            modelBuilder.Entity("AID.Model.Avatar", b =>
+            modelBuilder.Entity("AID.Entites.Avatar", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
@@ -60,15 +60,15 @@ namespace AID_Web.Migrations
                     b.Property<string>("avatarUrl")
                         .HasColumnType("text");
 
-                    b.Property<string>("createTime")
-                        .HasColumnType("text");
+                    b.Property<DateTime>("createTime")
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("id");
 
                     b.ToTable("Avatars");
                 });
 
-            modelBuilder.Entity("AID.Model.DataSet", b =>
+            modelBuilder.Entity("AID.Entites.DataSet", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
@@ -93,7 +93,7 @@ namespace AID_Web.Migrations
                     b.ToTable("Datasets");
                 });
 
-            modelBuilder.Entity("AID.Model.Tag", b =>
+            modelBuilder.Entity("AID.Entites.Tag", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
@@ -112,7 +112,7 @@ namespace AID_Web.Migrations
                     b.ToTable("Tags");
                 });
 
-            modelBuilder.Entity("AID.Model.User", b =>
+            modelBuilder.Entity("AID.Entites.User", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
@@ -149,7 +149,7 @@ namespace AID_Web.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("AID.Model.Video", b =>
+            modelBuilder.Entity("AID.Entites.Video", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
@@ -180,7 +180,7 @@ namespace AID_Web.Migrations
                     b.ToTable("Videos");
                 });
 
-            modelBuilder.Entity("AID.Model.WithdrawRequest", b =>
+            modelBuilder.Entity("AID.Entites.WithdrawRequest", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
