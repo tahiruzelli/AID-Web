@@ -29,7 +29,7 @@ namespace AID_Web.Controllers
             Avatar newAvatar = new Avatar();
             newAvatar.avatarUrl = HttpUtility.UrlDecode(url);
             newAvatar.createTime = DateTime.UtcNow;
-            _context.Add(newAvatar);
+            await _context.AddAsync(newAvatar);
             _context.SaveChanges();
             return new ResponseModel<Avatar>(true, newAvatar, "");
         }
