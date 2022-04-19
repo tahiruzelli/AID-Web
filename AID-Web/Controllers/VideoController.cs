@@ -31,6 +31,8 @@ namespace AID_Web.Controllers
             video.videoLength= newVideo.videoLength;
             video.coverImageUrl = newVideo.coverImageUrl;
             video.totalGain = newVideo.totalGain;
+
+            //
             video.createTime = DateTime.UtcNow;
             _context.Add(video);
             _context.SaveChanges();
