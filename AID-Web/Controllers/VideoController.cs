@@ -32,6 +32,7 @@ namespace AID_Web.Controllers
             video.coverImageUrl = newVideo.coverImageUrl;
             video.totalGain = newVideo.totalGain;
             video.createTime = DateTime.UtcNow;
+            //
             _context.Add(video);
             _context.SaveChanges();
             return new ResponseModel<Video>(true, video, "");
