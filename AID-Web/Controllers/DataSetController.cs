@@ -21,7 +21,7 @@ namespace AID_Web.Controllers
 
 
             User user = await _context.Users.Where(x => x.id == newDataSet.userId).FirstOrDefaultAsync();
-            if (user is not null)
+            if (user is null)
             {
                 return new ResponseModel<DataSet>(false, null, "Bu id'ye ait bir user yok!");
             }
