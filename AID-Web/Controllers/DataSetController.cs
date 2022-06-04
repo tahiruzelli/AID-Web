@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using AID;
 using AID.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace AID_Web.Controllers
 {
@@ -18,10 +19,26 @@ namespace AID_Web.Controllers
         public async Task<ResponseModel<DataSet>> CreateData([FromBody]DataSet newDataSet)
         {
 
-            DataSet dataSet = newDataSet;
-            _context.Add(dataSet);
-            _context.SaveChanges();
-            return new ResponseModel<DataSet>(true, newDataSet, "");
+
+            User user = await _context.Users.Where(x => x.id == newDataSet.userId).FirstOrDefaultAsync();
+            if (user is not null)
+            {
+                return new ResponseModel<DataSet>(false, null, "Bu id'ye ait bir user yok!");
+            }
+            else
+            {
+                DataSet dataSet = newDataSet;
+                _context.Add(dataSet);
+                
+                user.totalGain += 0.01;
+                _context.Update(user);
+
+                _context.SaveChanges();
+
+                return new ResponseModel<DataSet>(true, newDataSet, "");
+            }
+
+    
         }
     }
 }
