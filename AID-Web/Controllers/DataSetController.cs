@@ -31,6 +31,8 @@ namespace AID_Web.Controllers
                 _context.Add(dataSet);
                 
                 user.totalGain += 0.01;
+                user.totalVideoEditetTime += 0.01;
+                user.balance += 0.01;
                 _context.Update(user);
 
                 _context.SaveChanges();

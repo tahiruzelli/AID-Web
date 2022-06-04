@@ -26,22 +26,37 @@ namespace AID_Web.Controllers
         }
 
         [HttpPost("CreateRequest")]
-        public ResponseModel<WithdrawRequest> CreateRequest([FromBody]CreateWithdrawRequestModel withdrawRequest)
+        public async Task<ResponseModel<WithdrawRequest>> CreateRequestAsync([FromBody]CreateWithdrawRequestModel withdrawRequest)
         {
-            WithdrawRequest newWithdrawRequest = new WithdrawRequest();
-            newWithdrawRequest.expDate = withdrawRequest.expDate;
-            newWithdrawRequest.userId = withdrawRequest.userId;
-            newWithdrawRequest.balance = withdrawRequest.balance;
-            newWithdrawRequest.cardNo = withdrawRequest.cardNo;
-            newWithdrawRequest.cardHolder = withdrawRequest.cardHolder;
-            newWithdrawRequest.cvv = withdrawRequest.cvv;
-            newWithdrawRequest.createTime = DateTime.UtcNow;
-            newWithdrawRequest.isApproved = false;
+            User user = await _context.Users.Where(x => x.id == withdrawRequest.userId).FirstOrDefaultAsync();
+            if (user is null)
+            {
+                return new ResponseModel<WithdrawRequest>(false, null, "Bu id'ye ait bir user yok!");
+            }
+            else
+            {
+                WithdrawRequest newWithdrawRequest = new WithdrawRequest();
+                newWithdrawRequest.expDate = withdrawRequest.expDate;
+                newWithdrawRequest.userId = withdrawRequest.userId;
+                newWithdrawRequest.balance = withdrawRequest.balance;
+                newWithdrawRequest.cardNo = withdrawRequest.cardNo;
+                newWithdrawRequest.cardHolder = withdrawRequest.cardHolder;
+                newWithdrawRequest.cvv = withdrawRequest.cvv;
+                newWithdrawRequest.createTime = DateTime.UtcNow;
+                newWithdrawRequest.isApproved = false;
 
-            _context.Add(newWithdrawRequest);
-            _context.SaveChanges();
-          //  
-            return new ResponseModel<WithdrawRequest>(true, newWithdrawRequest, "");
+                _context.Add(newWithdrawRequest);
+
+                user.balance -= withdrawRequest.balance;
+
+                _context.Update(user);
+
+                _context.SaveChanges();
+                
+                return new ResponseModel<WithdrawRequest>(true, newWithdrawRequest, "");
+            }
+
+
         }
 
         private async Task<bool> ApproveWithDrawRequest(int id)
