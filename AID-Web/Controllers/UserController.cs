@@ -29,6 +29,22 @@ namespace AID.Controller
             return new ResponseModel<User>(true, user, "");
 
         }
+
+
+        [HttpGet("ParaEkle/{id}")]
+        public async Task<ResponseModel<User>> ParaEkle(int id)
+        {
+            User user = await _context.Users.FirstOrDefaultAsync(x => x.id == id);
+            if (user is null)
+                return new ResponseModel<User>(false, null, "Böyle bir user yok");
+            user.balance += 50;
+            user.totalGain += 50;
+            _context.Update(user);
+            _context.SaveChanges();
+            return new ResponseModel<User>(true, user, "");
+
+        }
+
         [HttpGet("GetAllUsers")]
         public async Task<ResponseModel<List<User>>> GetAllUsers()
         {
