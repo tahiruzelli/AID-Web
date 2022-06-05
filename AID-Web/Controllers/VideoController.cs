@@ -27,11 +27,9 @@ namespace AID_Web.Controllers
         [HttpGet("DeleteAllVideos")]
         public async Task<ResponseModel<List<Video>>> DeleteAllVideos()
         {
-            List<Video> _avatars = await _context.Videos.ToListAsync();
-            _avatars.Clear();
-            _context.Update(_avatars);
-            _context.SaveChanges();
-            return new ResponseModel<List<Video>>(true, _avatars, "");
+            _context.Database.ExecuteSqlRaw("TRUNCATE TABLE [Vides]");
+
+            return new ResponseModel<List<Video>>(true, null, "");
         }
 
         [HttpPost("CreateVideo")]
