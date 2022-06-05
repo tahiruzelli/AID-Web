@@ -23,6 +23,17 @@ namespace AID_Web.Controllers
             List<Video> _avatars = await _context.Videos.ToListAsync();
             return new ResponseModel<List<Video>>(true, _avatars, "");
         }
+
+        [HttpGet("DeleteAllVideos")]
+        public async Task<ResponseModel<List<Video>>> DeleteAllVideos()
+        {
+            List<Video> _avatars = await _context.Videos.ToListAsync();
+            _avatars.Clear();
+            _context.Update(_avatars);
+            _context.SaveChanges();
+            return new ResponseModel<List<Video>>(true, _avatars, "");
+        }
+
         [HttpPost("CreateVideo")]
         public async Task<ResponseModel<Video>> CreateVideo([FromBody] CreateVideoModel newVideo)
         {
