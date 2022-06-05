@@ -27,7 +27,7 @@ namespace AID_Web.Controllers
         [HttpGet("DeleteAllVideos")]
         public async Task<ResponseModel<List<Video>>> DeleteAllVideos()
         {
-            _context.Database.ExecuteSqlRaw("TRUNCATE TABLE Video");
+            _context.Database.ExecuteSqlRaw("TRUNCATE TABLE Videos");
 
             return new ResponseModel<List<Video>>(true, null, "");
         }
